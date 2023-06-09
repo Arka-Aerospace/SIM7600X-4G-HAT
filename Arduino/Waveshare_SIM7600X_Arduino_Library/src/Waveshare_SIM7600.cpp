@@ -55,6 +55,9 @@ void Sim7x00::PowerOn(int PowerKey = powerkey){
     // waits for an answer from the module
     while (answer == 0) {     // Send AT every two seconds and wait for the answer
       answer = sendATcommand("AT", "OK", 2000);
+      Serial.print("Final AT Response: ");
+      Serial.print(answer);
+      Serial.print("\n");
 	  delay(1000);
     }
 
@@ -369,7 +372,9 @@ uint8_t Sim7x00::sendATcommand(const char* ATcommand, const char* expected_answe
         if(Serial.available() != 0){    
             // if there are data in the UART input buffer, reads it and checks for the asnwer
             response[x] = Serial.read();      
-//            Serial.print(response[x]);
+            Serial.print("Loop AT Response: ");    
+            Serial.print(response[x]);   
+            Serial.print("\n");
             x++;
             // check if the desired answer  is in the response of the module
             if (strstr(response, expected_answer) != NULL)    
